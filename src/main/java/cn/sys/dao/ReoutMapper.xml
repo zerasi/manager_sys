@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.sys.dao.ReoutMapper" >
+
+    <resultMap id="BaseResultMap" type="cn.sys.entity.Reout" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="onum" property="onum" jdbcType="VARCHAR" />
+        <result column="count" property="count" jdbcType="BIGINT" />
+        <result column="total" property="total" jdbcType="DECIMAL" />
+        <result column="actual_total" property="actual_total" jdbcType="DECIMAL" />
+        <result column="people" property="people" jdbcType="VARCHAR" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="rid" property="rid" jdbcType="INTEGER" />
+        <result column="create_date" property="create_date" jdbcType="TIMESTAMP" />
+        <result column="uid" property="uid" jdbcType="INTEGER" />
+        <result column="purchaser" property="purchaser" jdbcType="VARCHAR" />
+        <result column="purchaser_bak" property="purchaser_bak" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List" >
+        id, onum, count, total, actual_total, people, remark, rid, create_date, uid, purchaser, 
+        purchaser_bak
+    </sql>
+
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.sys.entity.ReoutExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        'true' as QUERYID,
+        <include refid="Base_Column_List" />
+        from reout
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select 
+        <include refid="Base_Column_List" />
+        from reout
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from reout
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <delete id="deleteByExample" parameterType="cn.sys.entity.ReoutExample" >
+        delete from reout
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+
+    <insert id="insert" parameterType="cn.sys.entity.Reout" >
+        <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into reout (onum, count, total, 
+            actual_total, people, remark, 
+            rid, create_date, uid, 
+            purchaser, purchaser_bak)
+        values (#{onum,jdbcType=VARCHAR}, #{count,jdbcType=BIGINT}, #{total,jdbcType=DECIMAL}, 
+            #{actual_total,jdbcType=DECIMAL}, #{people,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+            #{rid,jdbcType=INTEGER}, #{create_date,jdbcType=TIMESTAMP}, #{uid,jdbcType=INTEGER}, 
+            #{purchaser,jdbcType=VARCHAR}, #{purchaser_bak,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="cn.sys.entity.Reout" >
+        <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into reout
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="onum != null" >
+                onum,
+            </if>
+            <if test="count != null" >
+                count,
+            </if>
+            <if test="total != null" >
+                total,
+            </if>
+            <if test="actual_total != null" >
+                actual_total,
+            </if>
+            <if test="people != null" >
+                people,
+            </if>
+            <if test="remark != null" >
+                remark,
+            </if>
+            <if test="rid != null" >
+                rid,
+            </if>
+            <if test="create_date != null" >
+                create_date,
+            </if>
+            <if test="uid != null" >
+                uid,
+            </if>
+            <if test="purchaser != null" >
+                purchaser,
+            </if>
+            <if test="purchaser_bak != null" >
+                purchaser_bak,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="onum != null" >
+                #{onum,jdbcType=VARCHAR},
+            </if>
+            <if test="count != null" >
+                #{count,jdbcType=BIGINT},
+            </if>
+            <if test="total != null" >
+                #{total,jdbcType=DECIMAL},
+            </if>
+            <if test="actual_total != null" >
+                #{actual_total,jdbcType=DECIMAL},
+            </if>
+            <if test="people != null" >
+                #{people,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null" >
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="rid != null" >
+                #{rid,jdbcType=INTEGER},
+            </if>
+            <if test="create_date != null" >
+                #{create_date,jdbcType=TIMESTAMP},
+            </if>
+            <if test="uid != null" >
+                #{uid,jdbcType=INTEGER},
+            </if>
+            <if test="purchaser != null" >
+                #{purchaser,jdbcType=VARCHAR},
+            </if>
+            <if test="purchaser_bak != null" >
+                #{purchaser_bak,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="countByExample" parameterType="cn.sys.entity.ReoutExample" resultType="java.lang.Integer" >
+        select count(*) from reout
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+
+    <update id="updateByExampleSelective" parameterType="map" >
+        update reout
+        <set >
+            <if test="record.id != null" >
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.onum != null" >
+                onum = #{record.onum,jdbcType=VARCHAR},
+            </if>
+            <if test="record.count != null" >
+                count = #{record.count,jdbcType=BIGINT},
+            </if>
+            <if test="record.total != null" >
+                total = #{record.total,jdbcType=DECIMAL},
+            </if>
+            <if test="record.actual_total != null" >
+                actual_total = #{record.actual_total,jdbcType=DECIMAL},
+            </if>
+            <if test="record.people != null" >
+                people = #{record.people,jdbcType=VARCHAR},
+            </if>
+            <if test="record.remark != null" >
+                remark = #{record.remark,jdbcType=VARCHAR},
+            </if>
+            <if test="record.rid != null" >
+                rid = #{record.rid,jdbcType=INTEGER},
+            </if>
+            <if test="record.create_date != null" >
+                create_date = #{record.create_date,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.uid != null" >
+                uid = #{record.uid,jdbcType=INTEGER},
+            </if>
+            <if test="record.purchaser != null" >
+                purchaser = #{record.purchaser,jdbcType=VARCHAR},
+            </if>
+            <if test="record.purchaser_bak != null" >
+                purchaser_bak = #{record.purchaser_bak,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByExample" parameterType="map" >
+        update reout
+        set id = #{record.id,jdbcType=INTEGER},
+            onum = #{record.onum,jdbcType=VARCHAR},
+            count = #{record.count,jdbcType=BIGINT},
+            total = #{record.total,jdbcType=DECIMAL},
+            actual_total = #{record.actual_total,jdbcType=DECIMAL},
+            people = #{record.people,jdbcType=VARCHAR},
+            remark = #{record.remark,jdbcType=VARCHAR},
+            rid = #{record.rid,jdbcType=INTEGER},
+            create_date = #{record.create_date,jdbcType=TIMESTAMP},
+            uid = #{record.uid,jdbcType=INTEGER},
+            purchaser = #{record.purchaser,jdbcType=VARCHAR},
+            purchaser_bak = #{record.purchaser_bak,jdbcType=VARCHAR}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="cn.sys.entity.Reout" >
+        update reout
+        <set >
+            <if test="onum != null" >
+                onum = #{onum,jdbcType=VARCHAR},
+            </if>
+            <if test="count != null" >
+                count = #{count,jdbcType=BIGINT},
+            </if>
+            <if test="total != null" >
+                total = #{total,jdbcType=DECIMAL},
+            </if>
+            <if test="actual_total != null" >
+                actual_total = #{actual_total,jdbcType=DECIMAL},
+            </if>
+            <if test="people != null" >
+                people = #{people,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null" >
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="rid != null" >
+                rid = #{rid,jdbcType=INTEGER},
+            </if>
+            <if test="create_date != null" >
+                create_date = #{create_date,jdbcType=TIMESTAMP},
+            </if>
+            <if test="uid != null" >
+                uid = #{uid,jdbcType=INTEGER},
+            </if>
+            <if test="purchaser != null" >
+                purchaser = #{purchaser,jdbcType=VARCHAR},
+            </if>
+            <if test="purchaser_bak != null" >
+                purchaser_bak = #{purchaser_bak,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="cn.sys.entity.Reout" >
+        update reout
+        set onum = #{onum,jdbcType=VARCHAR},
+            count = #{count,jdbcType=BIGINT},
+            total = #{total,jdbcType=DECIMAL},
+            actual_total = #{actual_total,jdbcType=DECIMAL},
+            people = #{people,jdbcType=VARCHAR},
+            remark = #{remark,jdbcType=VARCHAR},
+            rid = #{rid,jdbcType=INTEGER},
+            create_date = #{create_date,jdbcType=TIMESTAMP},
+            uid = #{uid,jdbcType=INTEGER},
+            purchaser = #{purchaser,jdbcType=VARCHAR},
+            purchaser_bak = #{purchaser_bak,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>
