@@ -33,7 +33,14 @@
 					pagination : true,
 					url : "../../findAllProduct.do",
 					idField : 'id',
-					columns : columns
+					columns : columns,
+					rowStyler: function(index,row) {
+						if (row.surplus >= 200000) {
+							return 'background-color:#ef4b4b;font-weight:bold;';
+						} else if (row.surplus <= '10000') {
+							return 'background-color:#3f773f;';
+						}
+					}
 				});
 				$("#save").click(function(){
 					if($("#formdata").form('validate')){
@@ -108,6 +115,10 @@
 				text : '删除',
 				iconCls : 'icon-cancel',
 				handler :dodelete
+			},{
+				id : 'button-tip',
+				text : '（绿色 < 1万< 正常 < 20万 < 红色）',
+				iconCls : 'icon-tip'
 			}];
 			
 			// 定义列
@@ -155,7 +166,20 @@
 				title : '商品详细',
 				width : 200,
 				align : 'center'
-			} ] ];
+			} ,
+				{
+					field : 'tip',
+					title : '提示',
+					width : 200,
+					align : 'center',formatter:function(data,row, index){
+						if (row.surplus >= 200000) {
+							return '存量大于20万';
+						} else if (row.surplus <= '10000') {
+							return '存量小于1万，请及时补货';
+						}
+						return "正常";
+					}
+				}] ];
 		</script>
 	</head>
 
