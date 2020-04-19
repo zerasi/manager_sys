@@ -133,7 +133,7 @@ public class ReoutController {
 			Reout obj = list.get(i);
             content[i][0] = obj.getOnum();
             content[i][1] = obj.getResource().getName();
-            content[i][2] = obj.getResource().getCategory().getName();
+
             content[i][3] = obj.getCount()+obj.getResource().getUnit();
             content[i][4] = obj.getTotal().toString();
             content[i][5] = obj.getActual_total().toString();

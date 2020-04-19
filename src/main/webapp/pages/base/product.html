@@ -135,16 +135,6 @@
 				title : '商品编号',
 				width : 120,
 				align : 'center'
-			} , {
-				field : 'c.id',
-				title : '所属分类',
-				width : 120,
-				align : 'center',formatter:function(data,row, index){
-					if(row.category!=null){
-						return row.category.name;
-					}
-					return "";
-				}
 			} ,{
 				field : 'surplus',
 				title : '商品存量',
@@ -163,7 +153,7 @@
 			} ,
 			{
 				field : 'des',
-				title : '商品详细',
+				title : '商品子件',
 				width : 200,
 				align : 'center'
 			} ,
